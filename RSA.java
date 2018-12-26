@@ -5,14 +5,14 @@ public class RSA {
     private BigInteger n; //модуль
     private BigInteger d;//закрытая экспонента
     private BigInteger e; //открытая экспонента
-    private BigInteger eulerFunction; //значение функции Эйлера m=(P-1)(Q-1)
+    private BigInteger eulerFunction; //значение функции Эйлера f(n)=(P-1)(Q-1)
 
     public RSA(int bitDepth) {      //bitDepth - разрядность случайных простых чисел в битах
         SecureRandom random = new SecureRandom();
         BigInteger p = new BigInteger(bitDepth /2, 100, random); // Выбрать большие простые P и Q
         BigInteger q = new BigInteger(bitDepth /2, 100, random);
         n = p.multiply(q); // Вычислить модуль N=P*Q
-        eulerFunction = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE)); // вычислить значение функции Эйлера m=(P-1)(Q-1)
+        eulerFunction = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE)); // вычислить значение функции Эйлера f(n)=(P-1)(Q-1)
         e = new BigInteger("3"); // Выбирается целое число e (1<e<f(n)), взаимно простое со значением функции m
         while (eulerFunction.gcd(e).intValue() > 1) { // Пока наибольший общий делитель больше одного
             e = e.add(new BigInteger("2")); // е = е + 2
